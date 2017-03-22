@@ -48,7 +48,7 @@ public struct PeekViewAction {
         super.init(frame:frame)
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
@@ -303,7 +303,7 @@ public struct PeekViewAction {
                 contentView.alpha = 0
                 }, completion: { completion in
                     self.removeFromSuperview()
-                    self.completionHandler(-1)
+                    self.completionHandler?(-1)
             })
         }
     }
