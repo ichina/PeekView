@@ -40,6 +40,17 @@ public struct PeekViewAction {
     
     var arrowImageView: UIImageView?
     
+    init() {
+        super.init()
+        print("PeekView init")
+    }
+    init(frame: CGRect) {
+        super.init(frame:frame)
+    }
+    deinit {
+        print("PeekView deinit")
+    }
+    
     /**
      *  Helper class function to support objective-c projects
      *  Since struct cannot be bridged to obj-c, user can input an NSArray of NSDictionary objects,
