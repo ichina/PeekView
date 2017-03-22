@@ -287,6 +287,7 @@ public struct PeekViewAction {
                 contentView.alpha = 0
                 }, completion: { completion in
                     self.removeFromSuperview()
+                    self.completionHandler(-1)
             })
         }
     }
