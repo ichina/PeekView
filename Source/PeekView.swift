@@ -22,8 +22,8 @@ var fromTouchToContentCenter = CGFloat(0)
 }
 
 public struct PeekViewAction {
-    var title: String
-    var style: PeekViewActionStyle
+    public var title: String
+    public var style: PeekViewActionStyle
     
     public init(title: String, style: PeekViewActionStyle){
         self.title = title
