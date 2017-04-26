@@ -24,10 +24,12 @@ var fromTouchToContentCenter = CGFloat(0)
 public struct PeekViewAction {
     public private(set) var title: String
     public private(set) var style: PeekViewActionStyle
+    public private(set) var handler: (PeekViewAction)->()
     
-    public init(title: String, style: PeekViewActionStyle){
+    public init(title: String, style: PeekViewActionStyle, handler: @escaping (PeekViewAction) -> ()){
         self.title = title
         self.style = style
+        self.handler = handler
     }
 }
 
@@ -41,44 +43,7 @@ public struct PeekViewAction {
     
     var arrowImageView: UIImageView?
     
-    /**
-     *  Helper class function to support objective-c projects
-     *  Since struct cannot be bridged to obj-c, user can input an NSArray of NSDictionary objects,
-     *  whose key will be treated as option title and value is an NSNumber of PeekViewActionStyle.
-     *  (More delicate solution to be found later :[ )
-     */
-    @objc open class func viewForController(
-        parentViewController parentController: UIViewController,
-        contentViewController contentController: UIViewController,
-        expectedContentViewFrame frame: CGRect,
-        fromGesture gesture: UILongPressGestureRecognizer,
-        shouldHideStatusBar flag: Bool,
-        withOptions menuOptions: NSArray?,
-        completionHandler handler: ((Int) -> Void)?) {
-        
-        var options: [PeekViewAction]? = nil
-        if let menuOptions = menuOptions {
-            options = []
-            for option in menuOptions {
-                if let dictionary = option as? NSDictionary,
-                    let title = dictionary.allKeys[0] as? NSString,
-                    let styleNumber = dictionary[title] as? NSNumber,
-                    let style = PeekViewActionStyle(rawValue: styleNumber.intValue) {
-                    options?.append(PeekViewAction(title: title as String, style: style))
-                }
-            }
-        }
-        
-        PeekView().viewForController(
-            parentViewController: parentController,
-            contentViewController: contentController,
-            expectedContentViewFrame: frame,
-            fromGesture: gesture,
-            shouldHideStatusBar: flag,
-            withOptions: options,
-            completionHandler: handler)
-    }
-    
+    var options: [PeekViewAction] = []
     /**
      *
      */
@@ -164,7 +129,7 @@ public struct PeekViewAction {
         self.shouldToggleHidingStatusBar = shouldHideStatusBar
         self.completionHandler = completionHandler
         self.contentVC = viewController
-        
+        self.options = options ?? []
         if shouldToggleHidingStatusBar == true {
             UIApplication.shared.isStatusBarHidden = true
         }
@@ -259,6 +224,10 @@ public struct PeekViewAction {
     func buttonPressed(_ sender: UIButton) {
         if let completionHandler = completionHandler {
             completionHandler(sender.tag)
+        }
+        if options.count > sender.tag {
+            let option = options[sender.tag]
+            option.handler(option)
         }
         
         if let imageView = sender.viewWithTag(tickImageViewTag) as? UIImageView {
