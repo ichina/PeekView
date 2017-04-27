@@ -24,9 +24,9 @@ var fromTouchToContentCenter = CGFloat(0)
 public struct PeekViewAction {
     public private(set) var title: String
     public private(set) var style: PeekViewActionStyle
-    public private(set) var handler: (PeekViewAction)->()
+    public private(set) var handler: ((PeekViewAction)->())?
     
-    public init(title: String, style: PeekViewActionStyle, handler: @escaping (PeekViewAction) -> ()){
+    public init(title: String, style: PeekViewActionStyle, handler: ((PeekViewAction) -> ())? = nil) {
         self.title = title
         self.style = style
         self.handler = handler
@@ -227,7 +227,7 @@ public struct PeekViewAction {
         }
         if options.count > sender.tag {
             let option = options[sender.tag]
-            option.handler(option)
+            option.handler?(option)
         }
         
         if let imageView = sender.viewWithTag(tickImageViewTag) as? UIImageView {
