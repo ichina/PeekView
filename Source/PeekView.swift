@@ -287,7 +287,7 @@ public struct PeekViewAction {
             }
             
             if let buttonHolderView = buttonHolderView {
-                print(contentView.frame.midY - self.frame.midY)
+
                 if (self.frame.midY - contentView.frame.midY) > 100 {//contentView.frame.maxY < self.frame.maxY - buttonHolderView.frame.height - buttonVerticalPadding*2 + 100 {
                     // if option buttons are visible entirely
                     var frame = buttonHolderView.frame
