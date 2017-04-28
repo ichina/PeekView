@@ -288,9 +288,8 @@ public struct PeekViewAction {
             
             if let buttonHolderView = buttonHolderView {
                 print(contentView.frame.midY - self.frame.midY)
-                if (contentView.frame.midY - self.frame.midY) < -100 {//contentView.frame.maxY < self.frame.maxY - buttonHolderView.frame.height - buttonVerticalPadding*2 + 100 {
+                if (self.frame.midY - contentView.frame.midY) > 100 {//contentView.frame.maxY < self.frame.maxY - buttonHolderView.frame.height - buttonVerticalPadding*2 + 100 {
                     // if option buttons are visible entirely
-                    print("fully")
                     var frame = buttonHolderView.frame
                     frame.origin.y = contentView.frame.maxY + buttonVerticalPadding//self.frame.maxY - buttonHolderView.frame.height - buttonVerticalPadding
                     UIView.animate(withDuration: 0.2, animations: { () -> Void in
@@ -299,7 +298,6 @@ public struct PeekViewAction {
                     })
                 } else if buttonHolderView.frame.minY < self.frame.maxY && contentView.frame.maxY < self.frame.maxY - buttonHolderView.frame.height - buttonVerticalPadding {
                     // if option buttons are visible partially
-                    print("partially")
                     var frame = buttonHolderView.frame
                     frame.origin.y = contentView.frame.maxY + buttonVerticalPadding
                     buttonHolderView.frame = frame
@@ -309,7 +307,6 @@ public struct PeekViewAction {
                 } else {
                     // hide option buttons
                     var frame = buttonHolderView.frame
-                    print("hide")
                     frame.origin.y = self.frame.maxY
                     UIView.animate(withDuration: 0.2, animations: { () -> Void in
                         buttonHolderView.frame = frame
