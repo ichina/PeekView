@@ -116,7 +116,12 @@ class DemoViewController: UIViewController, UICollectionViewDataSource, UICollec
             let options = [
                 PeekViewAction(title: "Option 1", style: .destructive),
                 PeekViewAction(title: "Option 2", style: .default),
-                PeekViewAction(title: "Option 3", style: .selected) ]
+                PeekViewAction(title: "Option 3", style: .default),
+                PeekViewAction(title: "Option 4", style: .default),
+                PeekViewAction(title: "Option 5", style: .default),
+                PeekViewAction(title: "Option 6", style: .default),
+                PeekViewAction(title: "Option 7", style: .default),
+                PeekViewAction(title: "Option 8", style: .selected) ]
             PeekView().viewForController(parentViewController: self, contentViewController: controller, expectedContentViewFrame: frame, fromGesture: gestureRecognizer, shouldHideStatusBar: true, withOptions: options, completionHandler: { optionIndex in
                     switch optionIndex {
                     case 0:
